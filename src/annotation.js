@@ -48,10 +48,12 @@ Vex.Flow.Annotation.prototype.setBottom = function(bottom) {
   this.bottom = bottom;
   return this;
 }
+
 Vex.Flow.Modifier.prototype.getJustification = function() {
   return this.justification; }
 Vex.Flow.Modifier.prototype.setJustification = function(justification) {
   this.justification = justification; return this; }
+
 
 Vex.Flow.Annotation.prototype.draw = function() {
   if (!this.context) throw new Vex.RERR("NoContext",
@@ -61,6 +63,14 @@ Vex.Flow.Annotation.prototype.draw = function() {
 
   var start = this.note.getModifierStartXY(Vex.Flow.Modifier.Position.ABOVE,
       this.index);
+
+  var x = start.x - (this.getWidth() / 2) + 10;
+  if(this.bottom) {
+    var y = this.note.stave.getYForBottomText(this.text_line);
+  } else {
+    var y = this.note.getYForTopText(this.text_line) - 1;
+  }
+
   this.context.save();
   this.context.setFont(this.font.family, this.font.size, this.font.weight);
 
